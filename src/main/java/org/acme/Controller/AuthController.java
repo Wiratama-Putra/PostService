@@ -1,6 +1,5 @@
-package org.acme.Config;
+package org.acme.Controller;
 
-import io.smallrye.jwt.build.Jwt;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -8,13 +7,15 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.core.Response;
+import org.acme.Service.AuthService;
+
 import java.util.Set;
 import java.util.Objects;
 
 @Path("/auth")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class AuthResource {
+public class AuthController {
 
     @Inject
     AuthService authService;
