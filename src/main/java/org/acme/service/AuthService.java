@@ -1,4 +1,4 @@
-package org.acme.Service;
+package org.acme.service;
 
 import io.smallrye.jwt.build.Jwt;
 import jakarta.enterprise.context.ApplicationScoped;

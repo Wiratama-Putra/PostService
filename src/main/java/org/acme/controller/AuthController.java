@@ -1,4 +1,4 @@
-package org.acme.Controller;
+package org.acme.controller;
 
 import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
@@ -7,7 +7,10 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.core.Response;
-import org.acme.Service.AuthService;
+import org.acme.service.AuthService;
+import org.acme.dto.LoginRequest;
+import org.acme.dto.AuthResponse;
+import org.acme.dto.ErrorResponse;
 
 import java.util.Set;
 import java.util.Objects;
@@ -17,38 +20,25 @@ import java.util.Objects;
 @Consumes(MediaType.APPLICATION_JSON)
 public class AuthController {
 
+    private final AuthService authService;
+
     @Inject
-    AuthService authService;
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @POST
     @Path("/login")
     public Response login(LoginRequest request) {
         if (request == null || request.username == null || request.username.isBlank()) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("{\"error\": \"Username harus diisi\"}")
+                    .entity(new ErrorResponse("Username harus diisi"))
                     .build();
         }
 
         Set<String> userRoles = Objects.requireNonNullElse(request.roles, Set.of());
-
         String token = authService.generateToken(request.username, userRoles);
+
         return Response.ok(new AuthResponse(token)).build();
     }
-
-    // DTO untuk menerima request
-    public static class LoginRequest {
-        public String username;
-        public Set<String> roles;
-    }
-
-    // DTO untuk response
-    public static class AuthResponse {
-        public String token;
-
-        public AuthResponse(String token) {
-            this.token = token;
-        }
-    }
 }
-
-

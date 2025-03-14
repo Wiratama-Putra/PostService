@@ -1,4 +1,4 @@
-package org.acme.DTO;
+package org.acme.dto;
 
 import java.util.List;
 

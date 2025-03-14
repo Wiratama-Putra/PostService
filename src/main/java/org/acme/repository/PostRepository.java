@@ -1,10 +1,10 @@
-package org.acme.Repository;
+package org.acme.repository;
 
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
-import org.acme.Model.Post;
+import org.acme.model.Post;
 
 import java.util.List;
 

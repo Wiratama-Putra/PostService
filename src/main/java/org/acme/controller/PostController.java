@@ -1,14 +1,12 @@
-package org.acme.Controller;
+package org.acme.controller;
 
 import jakarta.annotation.security.RolesAllowed;
-import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.acme.DTO.PostDTO;
-import org.acme.Model.Post;
-import org.acme.Service.PostService;
-import org.eclipse.microprofile.jwt.JsonWebToken;
+import org.acme.dto.PostDTO;
+import org.acme.model.Post;
+import org.acme.service.PostService;
 
 import java.util.List;
 
