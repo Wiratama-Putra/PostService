@@ -10,14 +10,7 @@ The API also includes **authentication & authorization** to ensure only **admins
 ✔ Assign **tags** to posts  
 ✔ **Search posts** by tag  
 ✔ **Authentication & Authorization** (User vs. Admin roles)  
-✔ **Deployed on Cloud** for easy access
 
----
-
-## 🚀 Live API (Cloud Deployment)
-**Base URL:**
-```plaintext
-https://your-app-name.onrender.com/api
 ```
 
 ### 🎯 **Example Endpoints**
@@ -25,7 +18,10 @@ https://your-app-name.onrender.com/api
 |--------|--------------------------------|-------------|
 | **GET** | `/posts` | Retrieve all posts |
 | **GET** | `/posts?tag=java` | Get posts by tag |
-| **POST** | `/posts` | Create a new post (User: Draft, Admin: Published) |
+| **POST** | `/posts` | Create a new post |
+| **PUT** | `/posts/{id}` | Edit a post |
+| **DELETE** | `/posts/{id}` | Delete a post |
+| **PUT** | `/posts/{id}` | Edit a post |
 
 ---
 
@@ -39,8 +35,8 @@ Ensure you have the following installed:
 
 ### 🔹 **2. Clone the Repository**
 ```bash
-git clone https://github.com/yourname/project.git
-cd project
+git clone https://github.com/Wiratama-Putra/PostService.git
+cd PostService
 ```
 
 ### 🔹 **3. Set Up Database**
@@ -54,11 +50,18 @@ Or use **Docker**:
 docker run --name blog_db -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
 ```
 
-### 🔹 **4. Configure Environment Variables**
+### 🔹 **4. Configure Application Properties**
 Create a `.env` file with:
 ```ini
-DATABASE_URL=jdbc:postgresql://localhost:5432/blog_db
-QUARKUS_OIDC_AUTH_SERVER_URL=http://your-auth-server
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.username=[your database username]
+quarkus.datasource.password=[your database password]
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/blog_db
+quarkus.hibernate-orm.database.generation=update
+quarkus.hibernate-orm.log.sql=true
+
+mp.jwt.verify.publickey.location=META-INF/resources/publicKey.pem
+smallrye.jwt.sign.key.location=META-INF/resources/privateKey.pem
 ```
 
 ### 🔹 **5. Run the Application**
@@ -165,4 +168,25 @@ Authorization: Bearer <ADMIN_TOKEN>
 }
 ```
 
+### 🔹 **5. User Login**
+**Request:**
+```http
+POST /auth/login
+Content-Type: application/json
+```
+```json
+{
+    "username": "user123",
+    "roles": ["User"]
+}
+```
+**Response:**
+```json
+{
+    "token": "<JWT_TOKEN>"
+}
+```
+
 ---
+
+
